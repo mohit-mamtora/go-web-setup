@@ -1,0 +1,26 @@
+package routes
+
+import (
+	"net/http"
+
+	"github.com/Mohit-Mamtora/gofinlop/app/model/dto"
+	"github.com/labstack/echo/v4"
+)
+
+func (route *Route) AuthRoutes() {
+
+	/* LOGIN */
+	route.Echo.POST("/login", func(c echo.Context) error {
+		username := c.FormValue("username")
+		password := c.FormValue("password")
+		route.log.Info("login: %s=%s", username, password)
+		response, err := route.service.UserService.Login(&dto.Request{
+			"username": username,
+			"password": password,
+		})
+		if err != nil {
+			return err
+		}
+		return c.JSON(http.StatusOK, response)
+	})
+}
