@@ -1,8 +1,8 @@
 package repository
 
 import (
-	app "github.com/Mohit-Mamtora/gofinlop/app"
 	"github.com/jmoiron/sqlx"
+	app "github.com/mohit-mamtora/go-web-setup/app"
 )
 
 type (

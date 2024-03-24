@@ -10,12 +10,12 @@ import (
 
 	_ "github.com/lib/pq"
 
-	"github.com/Mohit-Mamtora/gofinlop/app"
-	filelogger "github.com/Mohit-Mamtora/gofinlop/app/logger/filelogger"
-	"github.com/Mohit-Mamtora/gofinlop/app/repository"
-	"github.com/Mohit-Mamtora/gofinlop/app/routes"
-	"github.com/Mohit-Mamtora/gofinlop/app/services"
-	"github.com/Mohit-Mamtora/gofinlop/config"
+	"github.com/mohit-mamtora/go-web-setup/app"
+	filelogger "github.com/mohit-mamtora/go-web-setup/app/logger/filelogger"
+	"github.com/mohit-mamtora/go-web-setup/app/repository"
+	"github.com/mohit-mamtora/go-web-setup/app/routes"
+	"github.com/mohit-mamtora/go-web-setup/app/services"
+	"github.com/mohit-mamtora/go-web-setup/config"
 )
 
 func main() {

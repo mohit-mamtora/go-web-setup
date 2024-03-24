@@ -4,10 +4,10 @@ import (
 	"context"
 	"net/http"
 
-	"github.com/Mohit-Mamtora/gofinlop/app"
-	"github.com/Mohit-Mamtora/gofinlop/app/logger"
-	"github.com/Mohit-Mamtora/gofinlop/app/services"
 	"github.com/labstack/echo/v4"
+	"github.com/mohit-mamtora/go-web-setup/app"
+	"github.com/mohit-mamtora/go-web-setup/app/logger"
+	"github.com/mohit-mamtora/go-web-setup/app/services"
 )
 
 type (

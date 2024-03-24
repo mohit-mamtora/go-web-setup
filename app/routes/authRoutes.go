@@ -3,8 +3,8 @@ package routes
 import (
 	"net/http"
 
-	"github.com/Mohit-Mamtora/gofinlop/app/model/dto"
 	"github.com/labstack/echo/v4"
+	"github.com/mohit-mamtora/go-web-setup/app/model/dto"
 )
 
 func (route *Route) AuthRoutes() {

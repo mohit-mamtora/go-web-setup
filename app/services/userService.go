@@ -1,9 +1,9 @@
 package services
 
 import (
-	"github.com/Mohit-Mamtora/gofinlop/app/logger"
-	"github.com/Mohit-Mamtora/gofinlop/app/model/dto"
-	"github.com/Mohit-Mamtora/gofinlop/app/repository"
+	"github.com/mohit-mamtora/go-web-setup/app/logger"
+	"github.com/mohit-mamtora/go-web-setup/app/model/dto"
+	"github.com/mohit-mamtora/go-web-setup/app/repository"
 )
 
 type (

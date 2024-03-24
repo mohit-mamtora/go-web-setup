@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"path/filepath"
 
-	"github.com/Mohit-Mamtora/gofinlop/app/logger"
+	"github.com/mohit-mamtora/go-web-setup/app/logger"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 )

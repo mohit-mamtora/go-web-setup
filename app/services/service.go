@@ -1,8 +1,8 @@
 package services
 
 import (
-	"github.com/Mohit-Mamtora/gofinlop/app"
-	"github.com/Mohit-Mamtora/gofinlop/app/repository"
+	"github.com/mohit-mamtora/go-web-setup/app"
+	"github.com/mohit-mamtora/go-web-setup/app/repository"
 )
 
 type (

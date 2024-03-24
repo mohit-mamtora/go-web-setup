@@ -1,8 +1,8 @@
 package repository
 
 import (
-	"github.com/Mohit-Mamtora/gofinlop/app/logger"
 	"github.com/jmoiron/sqlx"
+	"github.com/mohit-mamtora/go-web-setup/app/logger"
 )
 
 type (

@@ -1,4 +1,4 @@
-module github.com/Mohit-Mamtora/gofinlop
+module github.com/mohit-mamtora/go-web-setup
 
 go 1.21.5
 
