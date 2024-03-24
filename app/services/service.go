@@ -11,7 +11,7 @@ type (
 	}
 )
 
-func InitilizeService(repo *repository.Repository, dh *app.DependencyHandler) *Service {
+func InitializeService(repo *repository.Repository, dh *app.DependencyHandler) *Service {
 	return &Service{
 		UserService: &UserServiceImpl{
 			Log:        dh.Logger,

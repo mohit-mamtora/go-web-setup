@@ -11,7 +11,7 @@ type (
 	}
 )
 
-func InitilizeRepository(db *sqlx.DB, dh *app.DependencyHandler) *Repository {
+func InitializeRepository(db *sqlx.DB, dh *app.DependencyHandler) *Repository {
 	return &Repository{
 		user: &UserRepository{
 			DB:  db,

@@ -18,7 +18,7 @@ type (
 	}
 )
 
-func InitilizeRoute(service *services.Service, dh *app.DependencyHandler) *Route {
+func InitializeRoute(service *services.Service, dh *app.DependencyHandler) *Route {
 	e := echo.New()
 
 	return &Route{
