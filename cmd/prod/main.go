@@ -19,10 +19,11 @@ import (
 )
 
 func main() {
+
 	log, err := filelogger.NewFileLogger("logs", "log.txt", 1, true)
 
 	if err != nil {
-		panic(err)
+		panic("logger initialization panic: " + err.Error())
 	}
 
 	defer log.Close()
@@ -34,16 +35,16 @@ func main() {
 
 	nativeDbConnection, err := sql.Open("postgres", psqlInfo)
 	if err != nil {
-		panic(err)
+		log.Fatal("%e", err)
 	}
 	err = nativeDbConnection.Ping()
 	if err != nil {
-		panic(err)
+		log.Fatal("%v", err)
 	}
 
-	db, err := repository.InitilizeDb(nativeDbConnection, "postgres")
+	db, err := repository.InitializeDb(nativeDbConnection, "postgres")
 	if err != nil {
-		panic(err)
+		log.Fatal("%v", err)
 	}
 
 	defer db.Close()
@@ -53,14 +54,14 @@ func main() {
 	}
 
 	/* Bootstrap Application */
-	repo := repository.InitilizeRepository(db, dependencyHandler)
-	service := services.InitilizeService(repo, dependencyHandler)
-	server := routes.InitilizeRoute(service, dependencyHandler)
+	repo := repository.InitializeRepository(db, dependencyHandler)
+	service := services.InitializeService(repo, dependencyHandler)
+	server := routes.InitializeRoute(service, dependencyHandler)
 
 	server.RegisterRoutes()
 	go func() {
 		if err = server.Start(config.ServerPort); err != nil {
-			panic(err)
+			log.Fatal("%v", err)
 		}
 	}()
 
@@ -74,6 +75,6 @@ func main() {
 	defer cancel()
 
 	if err = server.Shutdown(ctx); err != nil {
-		panic(err)
+		log.Fatal("%v", err)
 	}
 }
