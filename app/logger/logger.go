@@ -11,6 +11,7 @@ type Log interface {
 	Info(format string, a ...any)  // log level is 2
 	Error(format string, a ...any) // log level is 1
 	Debug(format string, a ...any) // log level is 3
+	Fatal(format string, a ...any) // log level is 4
 
 	// system will only print log which level is less than or equal to (<=) applied level
 	SetLogLevel(level int) // default will be 3

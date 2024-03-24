@@ -67,6 +67,11 @@ func (f *FileLogger) Error(format string, a ...any) {
 	f.logger.Debug(msg)
 }
 
+func (f *FileLogger) Fatal(format string, a ...any) {
+	msg := fmt.Sprintf(format, a...)
+	f.logger.Fatal(msg)
+}
+
 func (f *FileLogger) LogLevel() int {
 	return f.logLevel
 }
