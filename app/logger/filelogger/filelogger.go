@@ -10,14 +10,14 @@ import (
 )
 
 type FileLogger struct {
-	logLevel int
+	logLevel int8
 	logger   *zap.Logger
 	rotator  *rotatingFile
 }
 
 var _ logger.Log = (*FileLogger)(nil)
 
-func NewFileLogger(filePath, fileName string, maxSizeMB int, jsonEncoder bool) (*FileLogger, error) {
+func NewFileLogger(filePath, fileName string, maxSizeMB int, logLevel int8, jsonEncoder bool) (*FileLogger, error) {
 
 	rotator := &rotatingFile{
 		filename:  filepath.Join(filePath, fileName),
@@ -39,17 +39,18 @@ func NewFileLogger(filePath, fileName string, maxSizeMB int, jsonEncoder bool) (
 	// Create encoder
 
 	// Create a core with the rotating file sink
-	core := zapcore.NewCore(encoder, sink, zapcore.InfoLevel)
+	core := zapcore.NewCore(encoder, sink, zapcore.Level(logLevel))
 
 	return &FileLogger{
 		rotator:  rotator,
-		logLevel: 3,
+		logLevel: logLevel,
 		logger:   zap.New(core),
 	}, nil
 }
 
-func (f *FileLogger) SetLogLevel(level int) {
-	f.logLevel = level
+func (f *FileLogger) SetLogLevel(logLevel int8) {
+	f.logLevel = logLevel
+	f.logger.Core().Enabled(zapcore.Level(logLevel))
 }
 
 func (f *FileLogger) Info(format string, a ...any) {
@@ -59,6 +60,7 @@ func (f *FileLogger) Info(format string, a ...any) {
 
 func (f *FileLogger) Debug(format string, a ...any) {
 	msg := fmt.Sprintf(format, a...)
+	fmt.Println(msg)
 	f.logger.Debug(msg)
 }
 
@@ -72,7 +74,7 @@ func (f *FileLogger) Fatal(format string, a ...any) {
 	f.logger.Fatal(msg)
 }
 
-func (f *FileLogger) LogLevel() int {
+func (f *FileLogger) LogLevel() int8 {
 	return f.logLevel
 }
 

@@ -7,13 +7,13 @@ import (
 
 type (
 	Repository struct {
-		user User
+		User User
 	}
 )
 
 func InitializeRepository(db *sqlx.DB, dh *app.DependencyHandler) *Repository {
 	return &Repository{
-		user: &UserRepository{
+		User: &UserRepository{
 			DB:  db,
 			log: dh.Logger,
 		},

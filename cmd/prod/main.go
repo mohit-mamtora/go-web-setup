@@ -8,9 +8,11 @@ import (
 	"os/signal"
 	"time"
 
+	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
 
 	"github.com/mohit-mamtora/go-web-setup/app"
+	"github.com/mohit-mamtora/go-web-setup/app/logger"
 	filelogger "github.com/mohit-mamtora/go-web-setup/app/logger/filelogger"
 	"github.com/mohit-mamtora/go-web-setup/app/repository"
 	"github.com/mohit-mamtora/go-web-setup/app/routes"
@@ -18,9 +20,11 @@ import (
 	"github.com/mohit-mamtora/go-web-setup/config"
 )
 
+var log logger.Log
+
 func main() {
 
-	log, err := filelogger.NewFileLogger("logs", "log.txt", 1, true)
+	log, err := filelogger.NewFileLogger("logs", "log.txt", 1, logger.DebugLevel, true)
 
 	if err != nil {
 		panic("logger initialization panic: " + err.Error())
@@ -28,19 +32,11 @@ func main() {
 
 	defer log.Close()
 
-	/* DB connnection */
-	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s "+
-		"password=%s dbname=%s sslmode=disable",
-		config.DbHost, config.DbPort, config.DbUser, config.DbPassword, config.Dbname)
+	if err = godotenv.Load(); err != nil {
+		panic(err)
+	}
 
-	nativeDbConnection, err := sql.Open("postgres", psqlInfo)
-	if err != nil {
-		log.Fatal("%e", err)
-	}
-	err = nativeDbConnection.Ping()
-	if err != nil {
-		log.Fatal("%v", err)
-	}
+	nativeDbConnection := loadDB()
 
 	db, err := repository.InitializeDb(nativeDbConnection, "postgres")
 	if err != nil {
@@ -57,9 +53,11 @@ func main() {
 	repo := repository.InitializeRepository(db, dependencyHandler)
 	service := services.InitializeService(repo, dependencyHandler)
 	server := routes.InitializeRoute(service, dependencyHandler)
-
 	server.RegisterRoutes()
+
+	/* Start Server  */
 	go func() {
+		log.Debug(config.ServerPort)
 		if err = server.Start(config.ServerPort); err != nil {
 			log.Fatal("%v", err)
 		}
@@ -77,4 +75,22 @@ func main() {
 	if err = server.Shutdown(ctx); err != nil {
 		log.Fatal("%v", err)
 	}
+}
+
+func loadDB() *sql.DB {
+
+	/* DB connnection */
+	psqlInfo := fmt.Sprintf("host=%s port=%s user=%s "+
+		"password=%s dbname=%s sslmode=disable",
+		config.DbHost, config.DbPort, config.DbUser, config.DbPassword, config.DbName)
+
+	nativeDbConnection, err := sql.Open("postgres", psqlInfo)
+	if err != nil {
+		log.Fatal("%e", err)
+	}
+	err = nativeDbConnection.Ping()
+	if err != nil {
+		log.Fatal("%v", err)
+	}
+	return nativeDbConnection
 }

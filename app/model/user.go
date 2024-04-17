@@ -9,18 +9,21 @@ import (
 
 type (
 	User struct {
-		Id        uuid.UUID
-		Name      string
-		Username  string
-		Password  string
-		Balance   int64
-		CreatedAt time.Time
-		UpdatedAt time.Time
+		Id        uuid.UUID `json:"id"`
+		Name      string    `json:"name" validate:"required"`
+		Email     string    `json:"email" validate:"required"`
+		Username  string    `json:"username" validate:"required"`
+		Password  string    `json:"-"`
+		CreatedAt time.Time `json:"created_at" db:"created_at"`
+		UpdatedAt time.Time `json:"updated_at" db:"updated_at"`
 	}
 
 	Auth struct {
-		Id       uuid.UUID
-		Username string
+		TokenId   uuid.UUID `json:"token_id"  db:"id"`
+		UserId    uuid.UUID `json:"user_id"`
+		Username  string    `json:"username"`
+		CreatedAt time.Time `json:"created_at" db:"created_at"`
+		UpdatedAt time.Time `json:"updated_at" db:"updated_at"`
 		jwt.RegisteredClaims
 	}
 )

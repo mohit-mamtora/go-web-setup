@@ -12,6 +12,7 @@ type (
 )
 
 func InitializeService(repo *repository.Repository, dh *app.DependencyHandler) *Service {
+
 	return &Service{
 		UserService: &UserServiceImpl{
 			Log:        dh.Logger,

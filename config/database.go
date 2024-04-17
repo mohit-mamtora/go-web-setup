@@ -1,10 +1,23 @@
 package config
 
-const (
-	// get config from somewhere else
-	DbHost     = "localhost"
-	DbPort     = 5432
-	DbUser     = "mohit"
-	DbPassword = "mohit"
-	Dbname     = "boiler"
+import (
+	"fmt"
+	"os"
 )
+
+var (
+	DbHost     string
+	DbPort     string
+	DbUser     string
+	DbPassword string
+	DbName     string
+)
+
+func init() {
+	DbHost = os.Getenv("DB_HOST")
+	fmt.Println(os.Getenv("DB_HOST"))
+	DbPort = os.Getenv("DB_PORT")
+	DbUser = os.Getenv("DB_USER")
+	DbPassword = os.Getenv("DB_PASSWORD")
+	DbName = os.Getenv("DB_DATABASE_NAME")
+}
