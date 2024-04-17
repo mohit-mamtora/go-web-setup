@@ -3,7 +3,6 @@ package repository
 import (
 	"context"
 	"errors"
-	"fmt"
 
 	"github.com/google/uuid"
 	"github.com/jmoiron/sqlx"
@@ -100,7 +99,7 @@ func (userRepository *UserRepository) DeleteToken(ctx context.Context, token *us
 }
 
 func (userRepository *UserRepository) ValidateToken(ctx context.Context, token *usermodel.Auth) (bool, error) {
-	fmt.Println(token)
+
 	rows, err := userRepository.DB.QueryxContext(ctx, "select count(id) from users_tokens where id=$1 and user_id=$2", token.TokenId, token.UserId)
 
 	if err != nil {
@@ -114,8 +113,6 @@ func (userRepository *UserRepository) ValidateToken(ctx context.Context, token *
 	if err != nil {
 		return false, err
 	}
-
-	fmt.Println(*count)
 
 	return *count != 0, nil
 }

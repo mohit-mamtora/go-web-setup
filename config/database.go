@@ -1,7 +1,6 @@
 package config
 
 import (
-	"fmt"
 	"os"
 )
 
@@ -15,7 +14,6 @@ var (
 
 func init() {
 	DbHost = os.Getenv("DB_HOST")
-	fmt.Println(os.Getenv("DB_HOST"))
 	DbPort = os.Getenv("DB_PORT")
 	DbUser = os.Getenv("DB_USER")
 	DbPassword = os.Getenv("DB_PASSWORD")

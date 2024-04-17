@@ -20,10 +20,9 @@ import (
 	"github.com/mohit-mamtora/go-web-setup/config"
 )
 
-var log logger.Log
-
 func main() {
 
+	os.Mkdir("logs", os.ModePerm)
 	log, err := filelogger.NewFileLogger("logs", "log.txt", 1, logger.DebugLevel, true)
 
 	if err != nil {
@@ -36,7 +35,19 @@ func main() {
 		panic(err)
 	}
 
-	nativeDbConnection := loadDB()
+	/* DB connnection */
+	psqlInfo := fmt.Sprintf("host=%s port=%s user=%s "+
+		"password=%s dbname=%s sslmode=disable",
+		config.DbHost, config.DbPort, config.DbUser, config.DbPassword, config.DbName)
+
+	nativeDbConnection, err := sql.Open("postgres", psqlInfo)
+	if err != nil {
+		log.Fatal("%e", err)
+	}
+	err = nativeDbConnection.Ping()
+	if err != nil {
+		log.Fatal("%v", err)
+	}
 
 	db, err := repository.InitializeDb(nativeDbConnection, "postgres")
 	if err != nil {
@@ -57,7 +68,6 @@ func main() {
 
 	/* Start Server  */
 	go func() {
-		log.Debug(config.ServerPort)
 		if err = server.Start(config.ServerPort); err != nil {
 			log.Fatal("%v", err)
 		}
@@ -75,22 +85,4 @@ func main() {
 	if err = server.Shutdown(ctx); err != nil {
 		log.Fatal("%v", err)
 	}
-}
-
-func loadDB() *sql.DB {
-
-	/* DB connnection */
-	psqlInfo := fmt.Sprintf("host=%s port=%s user=%s "+
-		"password=%s dbname=%s sslmode=disable",
-		config.DbHost, config.DbPort, config.DbUser, config.DbPassword, config.DbName)
-
-	nativeDbConnection, err := sql.Open("postgres", psqlInfo)
-	if err != nil {
-		log.Fatal("%e", err)
-	}
-	err = nativeDbConnection.Ping()
-	if err != nil {
-		log.Fatal("%v", err)
-	}
-	return nativeDbConnection
 }

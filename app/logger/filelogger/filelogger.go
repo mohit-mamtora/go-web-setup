@@ -2,6 +2,7 @@ package logger
 
 import (
 	"fmt"
+	"log"
 	"path/filepath"
 
 	"github.com/mohit-mamtora/go-web-setup/app/logger"
@@ -71,6 +72,7 @@ func (f *FileLogger) Error(format string, a ...any) {
 
 func (f *FileLogger) Fatal(format string, a ...any) {
 	msg := fmt.Sprintf(format, a...)
+	log.Println(msg) // print to shell i/o
 	f.logger.Fatal(msg)
 }
 
