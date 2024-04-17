@@ -8,7 +8,6 @@ import (
 	"os/signal"
 	"time"
 
-	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
 
 	"github.com/mohit-mamtora/go-web-setup/app"
@@ -30,10 +29,6 @@ func main() {
 	}
 
 	defer log.Close()
-
-	if err = godotenv.Load(); err != nil {
-		panic(err)
-	}
 
 	/* DB connnection */
 	psqlInfo := fmt.Sprintf("host=%s port=%s user=%s "+
