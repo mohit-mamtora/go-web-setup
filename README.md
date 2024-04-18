@@ -1,24 +1,43 @@
 # go-web-setup
-Rapid development with Golang setup template, fortified with Echo, sqlx, sql-migrate, and zap⚡️ promises an extraordinary journey for your next project.
-
-# Includes 
-- User Schema
-- Default APIs ( Register, Login, CRUD )
-- JWT Authentication 
+Welcome to **go-web-setup**, a rapid development template for Golang web applications. This setup is fortified with popular libraries and tools like Echo, sqlx, sql-migrate, and zap⚡️ to promise an extraordinary journey for your next project.
 
 
-# Run
+## Features
 
-    git clone go-web-setup
+- **User Schema**: Comes with a predefined user schema.
+- **Default APIs**: Includes standard APIs for user registration, login, and CRUD operations.
+- **JWT Authentication**: Uses JSON Web Tokens for authentication.
+
+## Setup
+
+Follow these steps to get started with the project:
+
+1. Clone the repository:
+    ```bash
+    git clone <repository_url>
+    cd go-web-setup
+    ```
+
+2. Install dependencies:
+    ```bash
     go get
-    
-    // setup .env refer .env.example
-    source .env
+    ```
 
+3. Setup environment variables:
+    - Create a `.env` file (refer to `.env.example` for the required variables).
+    - Source the `.env` file:
+        ```bash
+        source .env
+        ```
+
+4. Start the application:
+    ```bash
     docker-compose up -d
     go run cmd/prod/main.go
+    ```
+## Project Structure
 
-# layer
+The project follows a layered architecture:
 
     ├── app
     │   ├── dependencies.go
@@ -35,8 +54,13 @@ Rapid development with Golang setup template, fortified with Echo, sqlx, sql-mig
     ├── logs
     └── migrations
 
-# TODO
-- Update readme
-- Test case
-- Queue management ( horizon )
-- CSRF support
+## To-Do
+
+- Update the readme with more detailed instructions.
+- Write test cases to ensure code quality and reliability.
+- Implement queue management (e.g., Horizon) for asynchronous processing.
+- Add CSRF support for enhanced security.
+
+## Contribution
+
+Feel free to contribute to the project by forking the repository and raising pull requests. Your contributions are highly appreciated!
