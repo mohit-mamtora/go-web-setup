@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"os"
 	"os/signal"
+	"path/filepath"
 	"time"
 
 	_ "github.com/lib/pq"
@@ -21,8 +22,7 @@ import (
 
 func main() {
 
-	os.Mkdir("logs", os.ModePerm)
-	log, err := filelogger.NewFileLogger("logs", "log.txt", 1, logger.DebugLevel, true)
+	log, err := filelogger.NewFileLogger(filepath.Dir(config.LogPath), filepath.Base(config.LogPath), 1, logger.DebugLevel, true)
 
 	if err != nil {
 		panic("logger initialization panic: " + err.Error())
